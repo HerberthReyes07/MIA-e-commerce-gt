@@ -1,0 +1,35 @@
+<div class="login-container">
+	<div class="login-image">
+		<img src="images/sign-in.jpg" alt="Autenticación" />
+	</div>
+	<div class="form-container">
+		<form (ngSubmit)="onSubmitLogin()" class="login-form">
+		<h2>Iniciar sesión</h2>
+		<mat-form-field appearance="outline" class="full-width">
+			<mat-label>Email</mat-label>
+			<input matInput type="email" placeholder="Correo electrónico" [formControl]="email"
+				(blur)="updateEmailErrorMessage()" required>
+			<mat-icon matSuffix>mail</mat-icon>
+			@if (email.invalid) {
+			<mat-error>{{emailErrorMessage()}}</mat-error>
+			}
+		</mat-form-field>
+		<mat-form-field appearance="outline" class="full-width">
+			<mat-label>Contraseña</mat-label>
+			<input matInput [type]="hide() ? 'password' : 'text'" placeholder="Contraseña" [formControl]="password" 
+				(blur)="updatePasswordErrorMessage()" />
+			<button matIconButton matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'"
+				[attr.aria-pressed]="hide()">
+				<mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+			</button>
+			@if (password.invalid) {
+			<mat-error>{{passwordErrorMessage()}}</mat-error>
+			}
+		</mat-form-field>
+		<button mat-raised-button color="primary" class="login-btn" type="submit">Acceder</button>
+		<div class="register-link">
+			<p>¿Aún no te has registrado? <a routerLink="/register">Registrarse aquí</a></p>
+		</div>
+	</form>
+	</div>
+</div>

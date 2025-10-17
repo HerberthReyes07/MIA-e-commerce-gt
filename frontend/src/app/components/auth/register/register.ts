@@ -4,11 +4,13 @@ import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterModule } from '@angular/router';
-import { Auth, RegisterDto } from '../auth';
+import { Router, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { merge } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AuthService, RegisterDto } from '../../../services/auth-service';
+import { AxiosService } from '../../../services/axios-service';
+import { SnackbarService } from '../../../services/snackbar-service';
 
 @Component({
   selector: 'app-register',
@@ -43,7 +45,7 @@ export class Register {
   phoneErrorMessage = signal('');
   hide = signal(true);
 
-  constructor(private auth: Auth) {
+  constructor(private axios: AxiosService, private auth: AuthService, private router: Router, private snackbar: SnackbarService) {
 
     merge(this.firstName.statusChanges, this.firstName.valueChanges)
       .pipe(takeUntilDestroyed())
@@ -135,10 +137,12 @@ export class Register {
 
         await this.auth.register(registerData);
         console.log('Registration successful');
-        // Aquí puedes agregar navegación al dashboard
+        // Redirigir al home del cliente
+        this.router.navigate(['/home']);
       } catch (error) {
         console.error('Register error:', error);
-        // Aquí puedes mostrar mensaje de error al usuario
+        const message = this.axios.getErrorMessage(error);
+        this.snackbar.showError("Error en el registro: " + message);
       }
     }
 

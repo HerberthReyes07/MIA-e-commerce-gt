@@ -1,0 +1,107 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.toolbar {
+  background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.toolbar button {
+  color: white;
+}
+
+.toolbar mat-icon {
+  color: white;
+}
+
+.is-mobile .toolbar {
+  position: fixed;
+  /* Make sure the toolbar will stay on top of the content as it scrolls past. */
+  z-index: 2;
+}
+
+h1.app-name {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.sidenav-container {
+  /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
+     causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
+  flex: 1;
+  background: #fafafa;
+}
+
+.sidenav-container mat-sidenav {
+  background:  #fafafa;
+  border-right: 1px solid #e0e0e0;
+  width: 250px;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+}
+
+.sidenav-container mat-sidenav-content {
+  background: white;
+  padding: 1.5rem;
+}
+
+/* .sidenav-container mat-nav-list a {
+  border-radius: 8px;
+  margin: 0.5rem 1rem;
+  transition: all 0.3s ease;
+} */
+
+.sidenav-container mat-nav-list a:hover {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.is-mobile .sidenav-container {
+  /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
+     `<body>` to be our scrolling element for mobile layouts. */
+  flex: 1 0 auto;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+/* Estilos para el botón del menú de usuario */
+.toolbar button[mat-button] {
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.toolbar button[mat-button]:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Estilos para el nombre de la app */
+h1.app-name {
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Estilos para el icono de carrito */
+/* .toolbar > mat-icon {
+  margin-right: 0.5rem;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+} */
+
+/* .toolbar > mat-icon:hover {
+  transform: scale(1.1);
+} */

@@ -1,0 +1,32 @@
+<div class="container" [class.is-mobile]="isMobile()">
+    <mat-toolbar class="toolbar">
+        <button matIconButton (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+        <h1 class="app-name">e-commerce-GT</h1>
+        <mat-icon>shopping_bag</mat-icon>
+        <span class="spacer"></span>
+        <button matButton="filled" [matMenuTriggerFor]="menu">
+            {{ getUserFullName() }}
+            <mat-icon>person</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="logout()">
+                <mat-icon>logout</mat-icon>
+                <span>Cerrar Sesión</span>
+            </button>
+        </mat-menu>
+    </mat-toolbar>
+
+    <mat-sidenav-container class="sidenav-container" [style.marginTop.px]="isMobile() ? 56 : 0">
+        <mat-sidenav #snav [mode]="isMobile() ? 'over' : 'side'" [fixedInViewport]="isMobile()" fixedTopGap="56" opened>
+            <mat-nav-list>
+                <a mat-list-item>Hola 1</a>
+                <a mat-list-item>Hola 2</a>
+                <a mat-list-item>Hola 3</a>
+            </mat-nav-list>
+        </mat-sidenav>
+
+        <mat-sidenav-content>
+            <router-outlet></router-outlet>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>

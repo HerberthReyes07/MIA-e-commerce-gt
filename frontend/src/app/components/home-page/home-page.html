@@ -1,0 +1,12 @@
+<div class="home-container">
+    <div class="welcome-section">
+        <h2 class="welcome-title">¡Bienvenid@!</h2>
+        <div class="user-info">
+            <h3 class="user-role">{{ roleDisplayName }}: <span class="user-name">{{ userName }}</span></h3>
+        </div>
+    </div>
+    <div>
+        <img [src]="roleImagePath" [alt]="roleDisplayName" class="role-image"
+            (error)="roleImagePath = '/images/default-home.svg'" />
+    </div>
+</div>

@@ -5,12 +5,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { Auth } from '../auth';
+import { Router, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { merge } from 'rxjs';
+import { AuthService } from '../../../services/auth-service';
+import { SnackbarService } from '../../../services/snackbar-service';
+import { AxiosService } from '../../../services/axios-service';
 
 @Component({
   selector: 'app-login',
@@ -39,7 +41,7 @@ export class Login {
 
   hide = signal(true);
 
-  constructor(private auth: Auth) {
+  constructor(private axios: AxiosService, private auth: AuthService, private router: Router, private snackbar: SnackbarService) {
     merge(this.email.statusChanges, this.email.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateEmailErrorMessage());
@@ -79,16 +81,13 @@ export class Login {
       try {
         await this.auth.login(this.email.value!, this.password.value!);
         console.log('Login successful');
-        // Aquí puedes agregar navegación al dashboard
-      } catch (error) {
+        this.router.navigate(['/home']);
+      } catch (error: unknown) {
         console.error('Login error:', error);
-        // Aquí puedes mostrar mensaje de error al usuario
+        const message = this.axios.getErrorMessage(error);
+        this.snackbar.showError("Error en el inicio de sesión: " + message);
       }
-    } /*else {
-      // Marcar los campos como touched para mostrar errores
-      this.email.markAsTouched();
-      this.password.markAsTouched();
-    }*/
+    }
   }
 
 }

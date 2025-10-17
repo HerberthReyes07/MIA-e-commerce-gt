@@ -29,26 +29,25 @@ public class UserService {
 
     public UserDto login(CredentialsDto credentialsDto) {
         User user = userRepository.findByEmail(credentialsDto.email())
-                .orElseThrow(() -> new AppException("Usuario desconocido", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new AppException("Credenciales inválidas", HttpStatus.NOT_FOUND));
 
         if (passwordEncoder.matches(CharBuffer.wrap(credentialsDto.password()), user.getPassword())) {
             return userMapper.toUserDto(user);
         }
 
-        throw new AppException("Contraseña inválida", HttpStatus.BAD_REQUEST);
-
+        throw new AppException("Credenciales inválidas", HttpStatus.BAD_REQUEST);
     }
 
     public UserDto register(SignUpDto signUpDto) {
 
         Optional<User> existingUser = userRepository.findByEmail(signUpDto.email());
         if (existingUser.isPresent()) {
-            throw new AppException("El correo ya está registrado", HttpStatus.BAD_REQUEST);
+            throw new AppException("El email ya está registrado", HttpStatus.BAD_REQUEST);
         }
 
         User newUser = userMapper.signUpToUser(signUpDto);
         newUser.setPassword(passwordEncoder.encode(CharBuffer.wrap(signUpDto.password())));
-        newUser.setRole(userRoleRepository.findByName("customer"));
+        newUser.setRole(userRoleRepository.findByName("admin"));
         userRepository.save(newUser);
         return userMapper.toUserDto(newUser);
     }

@@ -1,13 +1,12 @@
 import { Routes } from '@angular/router';
-import { Login } from './auth/login/login';
-import { Register } from './auth/register/register';
+import { Login } from './components/auth/login/login';
+import { Register } from './components/auth/register/register';
+import { Sidenav } from './components/sidenav/sidenav';
+import { authGuard } from './utils/auth-guard';
+import { PageNotFound } from './components/page-not-found/page-not-found';
 
 export const routes: Routes = [
-
-    {
-        path: '',
-        component: Login
-    },
+    // Rutas de autenticación (sin sidenav)
     {
         path: 'login',
         component: Login
@@ -15,7 +14,28 @@ export const routes: Routes = [
     {
         path: 'register',
         component: Register
-    }
-    
+    },
 
+    // Rutas con sidenav (área del cliente)
+    {
+        path: '',
+        component: Sidenav,
+        children: [
+            {
+                path: 'home',
+                loadComponent: () => import('./components/home-page/home-page').then(c => c.HomePage),
+                canActivate: [authGuard],
+                data: { roles: ['customer', 'moderator', 'logistics', 'admin'] }
+            },
+            {
+                path: '',
+                redirectTo: 'home',
+                pathMatch: 'full'
+            }
+        ]
+    },
+    {
+        path: '**',
+        component: PageNotFound
+    }
 ];

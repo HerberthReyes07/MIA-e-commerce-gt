@@ -6,6 +6,8 @@
   bottom: 0;
   left: 0;
   right: 0;
+  /* Ensure the container fills the viewport and allows children to size correctly */
+  min-height: 100vh;
 }
 
 .toolbar {
@@ -53,13 +55,12 @@ h1.app-name {
 .sidenav-container mat-sidenav-content {
   background: white;
   padding: 1.5rem;
+  /* Make the mat-sidenav-content the scroll container for page content so the layout doesn't
+     push the sidenav or page when the inner content grows (like a tall table). */
+  overflow: auto;
+  min-height: 0;
+  box-sizing: border-box;
 }
-
-/* .sidenav-container mat-nav-list a {
-  border-radius: 8px;
-  margin: 0.5rem 1rem;
-  transition: all 0.3s ease;
-} */
 
 .sidenav-container mat-nav-list a:hover {
   background: #e3f2fd;

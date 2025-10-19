@@ -1,0 +1,105 @@
+/* Page container */
+.page-container {
+  margin-bottom: 1.5rem;
+}
+
+/* Page title */
+.page-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 2rem;
+  font-weight: 500;
+  margin: 0 0 1.5rem 0;
+  color: #333;
+}
+
+.page-title mat-icon {
+  font-size: 2rem;
+  width: 2rem;
+  height: 2rem;
+  color: #3f51b5;
+}
+
+/* Header section with filter and button */
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-field {
+  flex: 1;
+  min-width: 250px;
+  max-width: 500px;
+}
+
+.add-button {
+  padding: 0.5rem 1.5rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.add-button mat-icon {
+  margin-right: 0.5rem;
+}
+
+/* Table styles */
+/* Table styles */
+table {
+  width: 100%;
+}
+
+/*td, th {
+  width: 25%;
+}*/
+
+/* Status badges */
+.status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.status-1 {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status-2 {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status-3 {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.no-data-cell {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.125rem;
+  color: #666;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-field {
+    max-width: 100%;
+  }
+
+  .add-button {
+    width: 100%;
+  }
+}

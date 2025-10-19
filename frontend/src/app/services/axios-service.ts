@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AxiosService {
   constructor() {
-    axios.defaults.baseURL = 'http://localhost:8080';
-    axios.defaults.headers.common['Content-Type'] = 'application/json';
+    axios.defaults.baseURL = environment.apiBaseUrl;
   }
 
   getAuthToken(): string | null {
@@ -23,18 +23,32 @@ export class AxiosService {
   }
 
   request<T = any>(method: string, url: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
-    let headers: Record<string, string> = {};
+    // Fusionar cabeceras: respetar las que vienen en config y añadir Authorization si existe
+    const mergedHeaders: Record<string, any> = {
+      ...(config?.headers as any),
+    };
 
-    if (this.getAuthToken() !== null) {
-      headers = { "Authorization": "Bearer " + this.getAuthToken() };
+    const token = this.getAuthToken();
+    if (token) {
+      mergedHeaders['Authorization'] = `Bearer ${token}`;
+    }
+
+    // Si el cuerpo es FormData, dejar que Axios establezca el Content-Type con boundary
+    if (typeof FormData !== 'undefined' && data instanceof FormData) {
+      delete mergedHeaders['Content-Type'];
+    } else {
+      // Para JSON u otros, si no se especificó, usar application/json
+      if (!mergedHeaders['Content-Type']) {
+        mergedHeaders['Content-Type'] = 'application/json';
+      }
     }
 
     return axios({
       method,
       url,
       data,
-      headers,
       ...config,
+      headers: mergedHeaders,
     });
   }
 

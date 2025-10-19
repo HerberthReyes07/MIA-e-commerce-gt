@@ -1,0 +1,109 @@
+<div class="page-container">
+    <h1 class="page-title">
+        <mat-icon>inventory_2</mat-icon>
+        Mis Productos
+    </h1>
+    <br>
+    <div class="header-section">
+        <mat-form-field appearance="outline" class="filter-field">
+            <mat-label>Filtrar productos</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
+            <mat-icon matPrefix>search</mat-icon>
+        </mat-form-field>
+
+        <button mat-raised-button (click)="openProductForm()" color="primary" class="add-button">
+            <mat-icon>add</mat-icon>
+            Agregar Producto
+        </button>
+    </div>
+</div>
+
+<div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+            <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+        </ng-container>
+
+        <!-- Price Column -->
+        <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Precio </th>
+            <td mat-cell *matCellDef="let row"> Q {{row.price | number:'1.2-2'}} </td>
+        </ng-container>
+
+        <!-- Stock Column -->
+        <ng-container matColumnDef="stock">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Stock </th>
+            <td mat-cell *matCellDef="let row"> {{row.stock}} </td>
+        </ng-container>
+
+        <!-- IsNew Column -->
+        <ng-container matColumnDef="isNew">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
+            <td mat-cell *matCellDef="let row"> {{getConditionLabel(row.isNew)}} </td>
+        </ng-container>
+
+        <!-- CreationDate Column -->
+        <ng-container matColumnDef="creationDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Creado </th>
+            <td mat-cell *matCellDef="let row"> {{formatDate(row.creationDate)}} </td>
+        </ng-container>
+
+        <!-- LastUpdatedDate Column -->
+        <ng-container matColumnDef="lastUpdatedDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Actualizado </th>
+            <td mat-cell *matCellDef="let row"> {{formatDate(row.lastUpdatedDate)}} </td>
+        </ng-container>
+
+        <!-- ReviewStatus Column -->
+        <ng-container matColumnDef="reviewStatus">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Revisión </th>
+            <td mat-cell *matCellDef="let row">
+                <span [class]="'status-badge status-' + row.reviewStatus">
+                    {{getReviewStatusLabel(row.reviewStatus)}}
+                </span>
+            </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let row">
+                <button mat-icon-button color="primary" (click)="openProductDetail(row)">
+                    <mat-icon>visibility</mat-icon>
+                </button>
+                <button mat-icon-button color="primary" (click)="openProductForm(row)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+            @if (isProductsEmpty) {
+                <td class="no-data-cell" [attr.colspan]="displayedColumns.length">
+                    No tienes productos agregados. ¡Comienza agregando uno nuevo!
+                </td>
+            }
+            @else {
+                <td class="no-data-cell" [attr.colspan]="displayedColumns.length">
+                    No se encontraron productos que coincidan con la búsqueda.
+                </td>
+            }
+        </tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons
+        aria-label="Seleccionar página de productos"></mat-paginator>
+</div>

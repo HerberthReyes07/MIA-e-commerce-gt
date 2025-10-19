@@ -1,0 +1,127 @@
+<h2 mat-dialog-title>
+    <mat-icon>{{ isEditMode ? 'edit' : 'add_circle' }}</mat-icon>
+    {{ isEditMode ? 'Editar Producto' : 'Agregar Producto' }}
+</h2>
+
+<mat-dialog-content>
+    <form [formGroup]="productForm" class="product-form">
+        <br>
+        <!-- Nombre -->
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nombre del producto</mat-label>
+            <input matInput formControlName="name" placeholder="Ingrese el nombre">
+            <mat-icon matPrefix>label</mat-icon>
+            @if (productForm.get('name')?.invalid) {
+            <mat-error>
+                {{ getErrorMessage('name') }}
+            </mat-error>
+            }
+        </mat-form-field>
+
+        <!-- Descripción -->
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Descripción</mat-label>
+            <textarea matInput formControlName="description" placeholder="Ingrese la descripción" rows="3"></textarea>
+            <mat-icon matPrefix>description</mat-icon>
+            @if (productForm.get('description')?.invalid) {
+            <mat-error>
+                {{ getErrorMessage('description') }}
+            </mat-error>
+            }
+        </mat-form-field>
+
+        <!-- Precio y Stock en la misma fila -->
+        <div class="form-row">
+            <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Precio</mat-label>
+                <input matInput type="number" formControlName="price" placeholder="0.00" step="0.01">
+                <mat-icon matPrefix>monetization_on</mat-icon>
+                @if (productForm.get('price')?.invalid) {
+                <mat-error>
+                    {{ getErrorMessage('price') }}
+                </mat-error>
+                }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Stock</mat-label>
+                <input matInput type="number" min="1" formControlName="stock" placeholder="0">
+                <mat-icon matPrefix>inventory</mat-icon>
+                @if (productForm.get('stock')?.invalid) {
+                <mat-error>
+                    {{ getErrorMessage('stock') }}
+                </mat-error>
+                }
+            </mat-form-field>
+        </div>
+
+        <!-- Estado -->
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Estado del producto</mat-label>
+            <mat-select formControlName="condition">
+                @for (option of conditionOptions; track option.value) {
+                <mat-option [value]="option.value">
+                    {{ option.label }}
+                </mat-option>
+                }
+            </mat-select>
+            <mat-icon matPrefix>info</mat-icon>
+        </mat-form-field>
+
+        <!-- Categorías -->
+        <div class="categories-section">
+            <label class="categories-label">
+                <mat-icon>category</mat-icon>
+                Categorías del producto *
+            </label>
+            <mat-chip-listbox multiple class="categories-chips" aria-label="Selección de categorías">
+                @for (category of categories; track category.id) {
+                <mat-chip-option [selected]="isCategorySelected(category.id)" (click)="toggleCategory(category.id)">
+                    {{ category.name }}
+                </mat-chip-option>
+                }
+            </mat-chip-listbox>
+            @if (productForm.get('categories')?.invalid && categoriesTouched) {
+            <div class="category-error">
+                {{ getErrorMessage('categories') }}
+            </div>
+            }
+        </div>
+
+        <!-- Input de archivo para imagen -->
+        <div class="file-upload-section">
+            <label class="file-upload-label">
+                <mat-icon>cloud_upload</mat-icon>
+                <span>{{ selectedFile ? selectedFile.name : 'Seleccionar imagen del producto' }}</span>
+                <input type="file" accept="image/*" (change)="onFileSelected($event)" hidden>
+            </label>
+
+            <!-- Preview de la imagen -->
+            @if (imagePreview) {
+            @if (isEditMode) {
+            <div class="current-image-label">
+                Imagen actual:
+            </div>
+            }
+            <div class="image-preview">
+                <img [src]="imagePreview" alt="Preview">
+                <button mat-icon-button type="button" class="remove-image"
+                    (click)="imagePreview = null; selectedFile = null">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            }
+        </div>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">
+        <mat-icon>close</mat-icon>
+        Cancelar
+    </button>
+    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="productForm.invalid">
+        <mat-icon>{{ isEditMode ? 'save' : 'add' }}</mat-icon>
+        {{ isEditMode ? 'Guardar' : 'Agregar' }}
+    </button>
+</mat-dialog-actions>

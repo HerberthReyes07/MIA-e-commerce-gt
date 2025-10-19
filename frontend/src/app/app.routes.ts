@@ -28,6 +28,12 @@ export const routes: Routes = [
                 data: { roles: ['customer', 'moderator', 'logistics', 'admin'] }
             },
             {
+                path: 'mis-productos',
+                loadComponent: () => import('./components/customer/my-products/my-products').then(c => c.MyProducts),
+                canActivate: [authGuard],
+                data: { roles: ['customer', 'moderator', 'logistics', 'admin'] }
+            },
+            {
                 path: '',
                 redirectTo: 'home',
                 pathMatch: 'full'

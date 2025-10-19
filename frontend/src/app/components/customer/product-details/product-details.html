@@ -1,0 +1,74 @@
+<h2 mat-dialog-title>
+    <mat-icon>info</mat-icon>
+    Detalles del Producto
+</h2>
+
+<div mat-dialog-content class="details-container">
+	<div class="image-wrapper" *ngIf="data.imageUrl; else noImage">
+		<img [src]="getImageUrl(data.imageUrl)" [alt]="data.name" />
+	</div>
+	<ng-template #noImage>
+		<div class="no-image">Sin imagen</div>
+	</ng-template>
+
+	<div class="fields">
+		<div class="field">
+			<label>Nombre</label>
+			<div>{{ data.name || '-' }}</div>
+		</div>
+		<div class="field">
+			<label>Descripción</label>
+			<div>{{ data.description || '-' }}</div>
+		</div>
+		<div class="grid">
+			<div class="field">
+				<label>Precio</label>
+				<div>Q {{ data.price | number:'1.2-2' }}</div>
+			</div>
+			<div class="field">
+				<label>Stock</label>
+				<div>{{ data.stock }}</div>
+			</div>
+			<div class="field">
+				<label>Condición</label>
+				<div>{{ getConditionLabel(data.isNew) }}</div>
+			</div>
+			<div class="field">
+				<label>Revisión</label>
+				<div>{{ getReviewStatusLabel(data.reviewStatus) }}</div>
+			</div>
+		</div>
+
+		<div class="field">
+			<label>Categorías</label>
+			<div>
+				<ng-container *ngIf="data.categories?.length; else noCats">
+					<mat-chip-set>
+						<mat-chip *ngFor="let c of data.categories">{{ c.name }}</mat-chip>
+					</mat-chip-set>
+				</ng-container>
+				<ng-template #noCats>
+					<span class="muted">Sin categorías</span>
+				</ng-template>
+			</div>
+		</div>
+
+		<div class="grid">
+			<div class="field">
+				<label>Creado</label>
+				<div>{{ formatDate(data.creationDate) }}</div>
+			</div>
+			<div class="field">
+				<label>Actualizado</label>
+				<div>{{ formatDate(data.lastUpdatedDate) }}</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div mat-dialog-actions align="end">
+	<button mat-stroked-button (click)="close()">
+		<mat-icon>close</mat-icon>
+		Cerrar
+	</button>
+</div>

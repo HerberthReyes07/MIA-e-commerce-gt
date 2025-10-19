@@ -28,15 +28,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
             if (authElements.length == 2 && "Bearer".equals(authElements[0])) {
                 try {
-
-                    if ("GET".equals(request.getMethod())) {
-                        SecurityContextHolder.getContext()
-                                .setAuthentication(userAuthProvider.validateToken(authElements[1]));
-                    } else {
-                        SecurityContextHolder.getContext()
-                                .setAuthentication(userAuthProvider.validateTokenStrongly(authElements[1]));
-                    }
-
+                    // Usar validateTokenStrongly para todos los requests
+                    // Así siempre tenemos el ID y datos completos del usuario
+                    SecurityContextHolder.getContext()
+                            .setAuthentication(userAuthProvider.validateTokenStrongly(authElements[1]));
                 } catch (RuntimeException e) {
                     SecurityContextHolder.clearContext();
                     throw e;

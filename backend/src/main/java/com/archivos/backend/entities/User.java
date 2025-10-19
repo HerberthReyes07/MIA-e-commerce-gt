@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -46,10 +47,17 @@ public class User {
     @Column(nullable = false, length = 255)
     private String address;
 
-    @Column(name = "registration_date", updatable = false, columnDefinition = "DATE DEFAULT CURRENT_DATE")
+    @Column(name = "registration_date", updatable = false)
     private LocalDate registrationDate;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "role_id", nullable = false)
     private UserRole role;
+
+    @PrePersist
+    protected void onCreate() {
+        if (registrationDate == null) {
+            registrationDate = LocalDate.now();
+        }
+    }
 }

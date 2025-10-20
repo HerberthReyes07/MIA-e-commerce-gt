@@ -72,3 +72,46 @@ h2[mat-dialog-title] mat-icon {
 .muted {
 	color: #999;
 }
+
+.rejection-reason {
+	grid-column: 1 / -1;
+	padding: 1rem;
+	background-color: #ffebee;
+	border-left: 4px solid #f44336;
+	border-radius: 4px;
+	margin-top: 0.5rem;
+}
+
+.rejection-reason strong {
+	color: #c62828;
+	display: block;
+	margin-bottom: 0.5rem;
+}
+
+.rejection-reason {
+	color: #5f2120;
+	line-height: 1.5;
+}
+
+.status-badge {
+  padding: 0.10rem 0.50rem;
+  border-radius: 12px;
+  /* font-size: 0.875rem;
+  font-weight: 500;
+  display: inline-block; */
+}
+
+.status-1 {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status-2 {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status-3 {
+  background-color: #f8d7da;
+  color: #721c24;
+}

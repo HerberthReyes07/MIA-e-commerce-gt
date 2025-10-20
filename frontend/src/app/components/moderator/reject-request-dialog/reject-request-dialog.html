@@ -1,0 +1,29 @@
+<h2 mat-dialog-title>
+    <mat-icon color="warn">cancel</mat-icon>
+    Rechazar Solicitud
+</h2>
+
+<div mat-dialog-content>
+    <p class="dialog-message">
+        ¿Estás seguro de que deseas rechazar la solicitud del producto <strong>{{ data.productName }}</strong>?
+    </p>
+
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Motivo del rechazo</mat-label>
+        <textarea matInput [(ngModel)]="rejectionReason" placeholder="Escribe el motivo del rechazo..." rows="4"
+            maxlength="500" required>
+    </textarea>
+        <mat-hint align="end">{{ rejectionReason.length }}/500</mat-hint>
+    </mat-form-field>
+</div>
+
+<div mat-dialog-actions align="end">
+    <button mat-stroked-button (click)="cancel()">
+        <mat-icon>close</mat-icon>
+        Cancelar
+    </button>
+    <button mat-raised-button color="warn" (click)="confirm()" [disabled]="!isReasonValid()">
+        <mat-icon>cancel</mat-icon>
+        Rechazar
+    </button>
+</div>

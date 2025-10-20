@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>
+  <mat-icon [color]="confirmColor">{{ icon }}</mat-icon>
+  {{ title }}
+</h2>
+
+<div mat-dialog-content>
+  <p class="dialog-message">{{ message }}</p>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-stroked-button (click)="cancel()">
+    <mat-icon>close</mat-icon>
+    {{ cancelText }}
+  </button>
+  <button 
+    mat-raised-button 
+    [color]="confirmColor" 
+    (click)="confirm()">
+    <mat-icon>check</mat-icon>
+    {{ confirmText }}
+  </button>
+</div>

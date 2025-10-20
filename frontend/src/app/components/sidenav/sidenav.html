@@ -23,10 +23,19 @@
                     <mat-icon matListItemIcon>home</mat-icon>
                     <span matListItemTitle>Home</span>
                 </a>
+                @if (userRole === "customer") {
                 <a mat-list-item routerLink="/mis-productos">
                     <mat-icon matListItemIcon>storefront</mat-icon>
                     <span matListItemTitle>Mis Productos</span>
                 </a>
+                }
+                @else if (userRole === "moderator") {
+                <a mat-list-item routerLink="/productos/revisar-solicitudes-pendientes">
+                    <mat-icon matListItemIcon>gavel</mat-icon>
+                    <span matListItemTitle>Revisar Solicitudes Pendientes</span>
+                </a>
+                }
+
             </mat-nav-list>
         </mat-sidenav>
 

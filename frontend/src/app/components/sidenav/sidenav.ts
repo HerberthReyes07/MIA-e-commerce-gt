@@ -21,6 +21,8 @@ export class Sidenav {
   private readonly _mobileQuery: MediaQueryList;
   private readonly _mobileQueryListener: () => void;
 
+  readonly userRole;
+
   constructor(private auth: AuthService, private router: Router) {
     const media = inject(MediaMatcher);
 
@@ -28,6 +30,7 @@ export class Sidenav {
     this.isMobile.set(this._mobileQuery.matches);
     this._mobileQueryListener = () => this.isMobile.set(this._mobileQuery.matches);
     this._mobileQuery.addEventListener('change', this._mobileQueryListener);
+    this.userRole = this.auth.authUser()?.role;
   }
 
   ngOnDestroy(): void {

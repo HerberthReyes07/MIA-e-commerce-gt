@@ -31,7 +31,13 @@ export const routes: Routes = [
                 path: 'mis-productos',
                 loadComponent: () => import('./components/customer/my-products/my-products').then(c => c.MyProducts),
                 canActivate: [authGuard],
-                data: { roles: ['customer', 'moderator', 'logistics', 'admin'] }
+                data: { roles: ['customer'] }
+            },
+            {
+                path: 'productos/revisar-solicitudes-pendientes',
+                loadComponent: () => import('./components/moderator/my-pending-requests/my-pending-requests').then(c => c.MyPendingRequests),
+                canActivate: [authGuard],
+                data: { roles: ['moderator'] }
             },
             {
                 path: '',

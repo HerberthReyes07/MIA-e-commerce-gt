@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { ProductDto } from '../../../services/product-service';
 import { environment } from '../../../../environments/environment';
+import { ProductModerationRequestService } from '../../../services/product-moderation-request-service';
 
 @Component({
   selector: 'app-product-details',
@@ -23,6 +24,18 @@ import { environment } from '../../../../environments/environment';
 export class ProductDetails {
   readonly data: ProductDto = inject(MAT_DIALOG_DATA);
   readonly dialogRef = inject(MatDialogRef<ProductDetails>);
+  rejectionReason: string | null = null;
+
+  constructor(private productModerationRequestService: ProductModerationRequestService) {
+
+    if (this.data.reviewStatus === 3) {
+      this.productModerationRequestService.getLatestRequestForProduct(this.data.id!).then(latestRequest => {
+        if (latestRequest) {
+          this.rejectionReason = latestRequest.rejectionReason || null;
+        }
+      });
+    }
+  }
 
   close(): void {
     this.dialogRef.close();

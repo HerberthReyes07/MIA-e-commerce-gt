@@ -5,6 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDate;
 import java.util.List;
 import com.archivos.backend.dtos.ProductDto;
+import com.archivos.backend.dtos.ProductModerationRequestDto;
 import com.archivos.backend.dtos.UserDto;
 import com.archivos.backend.entities.Product;
 import com.archivos.backend.mappers.ProductMapper;
@@ -19,6 +20,7 @@ public class ProductService {
     private final UserService userService;
     private final ProductMapper productMapper;
     private final ImageService imageService;
+    private final ProductModerationRequestService productModerationRequestService;
 
     public ProductDto createProduct(ProductDto productDto, MultipartFile image) {
 
@@ -34,6 +36,12 @@ public class ProductService {
         }
 
         Product savedProduct = productRepository.save(product);
+
+        productModerationRequestService.createModerationRequest(
+                ProductModerationRequestDto.builder()
+                        .productId(savedProduct.getId())
+                        .build());
+
         return productMapper.toProductDto(savedProduct);
     }
 
@@ -62,6 +70,14 @@ public class ProductService {
             imageService.deleteImage(product.getImageUrl());
             String imageUrl = imageService.saveImage(image);
             product.setImageUrl(imageUrl);
+        }
+
+        if (product.getReviewStatus() == 3) {
+            productModerationRequestService.createModerationRequest(
+                ProductModerationRequestDto.builder()
+                        .productId(product.getId())
+                        .build());
+            product.setReviewStatus(1);
         }
 
         Product updatedProduct = productRepository.save(product);

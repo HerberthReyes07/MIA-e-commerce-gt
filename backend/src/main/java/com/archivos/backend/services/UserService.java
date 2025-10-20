@@ -59,4 +59,9 @@ public class UserService {
         return (UserDto) auth.getPrincipal();
     }
 
+    public UserDto getModeratorWithLeastPendingRequests() {
+        User moderator = userRepository.findModeratorWithLeastPendingRequests();
+        return userMapper.toUserDto(moderator);
+    }
+
 }

@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>
-    <mat-icon>info</mat-icon>
-    Detalles del Producto
+	<mat-icon>info</mat-icon>
+	Detalles del Producto
 </h2>
 
 <div mat-dialog-content class="details-container">
@@ -33,10 +33,6 @@
 				<label>Condición</label>
 				<div>{{ getConditionLabel(data.isNew) }}</div>
 			</div>
-			<div class="field">
-				<label>Revisión</label>
-				<div>{{ getReviewStatusLabel(data.reviewStatus) }}</div>
-			</div>
 		</div>
 
 		<div class="field">
@@ -62,7 +58,17 @@
 				<label>Actualizado</label>
 				<div>{{ formatDate(data.lastUpdatedDate) }}</div>
 			</div>
+			<div class="field">
+				<label style="margin-bottom: 0px;">Revisión</label>
+				<div [class]="'status-badge status-' + data.reviewStatus">{{ getReviewStatusLabel(data.reviewStatus) }}</div>
+			</div>
 		</div>
+
+		@if (rejectionReason) {
+		<div class="rejection-reason">
+			<strong>Razón de Rechazo:</strong> {{ rejectionReason }}
+		</div>
+		}
 	</div>
 </div>
 

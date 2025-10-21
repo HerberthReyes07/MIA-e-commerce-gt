@@ -1,0 +1,80 @@
+<h2 mat-dialog-title>
+    <mat-icon>{{ isEditMode ? 'edit' : 'person_add' }}</mat-icon>
+    {{ isEditMode ? 'Editar empleado' : 'Crear empleado' }}
+</h2>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" mat-dialog-content class="form-container">
+    <br>
+    <div class="grid">
+        <mat-form-field appearance="outline">
+            <mat-label>Nombres</mat-label>
+            <input matInput formControlName="firstName" placeholder="Juan">
+            <mat-icon matPrefix>person</mat-icon>
+            @if (form.get('firstName')?.invalid) {
+                <mat-error>{{ getErrorMessage('firstName') }}</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Apellidos</mat-label>
+            <input matInput formControlName="lastName" placeholder="Pérez">
+            <mat-icon matPrefix>person</mat-icon>
+            @if (form.get('lastName')?.invalid) {
+                <mat-error>{{ getErrorMessage('lastName') }}</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full">
+            <mat-label>Correo</mat-label>
+            <input matInput type="email" formControlName="email" placeholder="correo@dominio.com">
+            <mat-icon matPrefix>email</mat-icon>
+            @if (form.get('email')?.invalid) {
+                <mat-error>{{ getErrorMessage('email') }}</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Puesto</mat-label>
+            <mat-select formControlName="position">
+                @for (p of positionOptions; track p.value) {
+                    <mat-option [value]="p.value">{{ p.label }}</mat-option>
+                }
+            </mat-select>
+            <mat-icon matPrefix>groups</mat-icon>
+            @if (form.get('position')?.invalid) {
+                <mat-error>{{ getErrorMessage('position') }}</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Teléfono</mat-label>
+            <input matInput formControlName="phone" placeholder="5555-5555">
+            <mat-icon matPrefix>phone</mat-icon>
+            @if (form.get('phone')?.invalid) {
+                <mat-error>{{ getErrorMessage('phone') }}</mat-error>
+            }
+        </mat-form-field>
+
+        @if (!isEditMode) {
+            <mat-form-field appearance="outline" class="full">
+                <mat-label>Contraseña</mat-label>
+                <input matInput type="password" formControlName="password" placeholder="********">
+                <mat-icon matPrefix>lock</mat-icon>
+                @if (form.get('password')?.invalid) {
+                    <mat-error>{{ getErrorMessage('password') }}</mat-error>
+                }
+            </mat-form-field>
+        }
+    </div>
+</form>
+
+<div mat-dialog-actions align="end">
+    <button mat-stroked-button type="button" (click)="onCancel()">
+        <mat-icon>close</mat-icon>
+        Cancelar
+    </button>
+    <button mat-raised-button color="primary" [disabled]="form.invalid" (click)="onSubmit()">
+        <mat-icon>{{ isEditMode ? 'save' : 'add' }}</mat-icon>
+        {{ isEditMode ? 'Guardar cambios' : 'Crear empleado' }}
+    </button>
+</div>

@@ -40,6 +40,12 @@ export const routes: Routes = [
                 data: { roles: ['moderator'] }
             },
             {
+                path: 'empleados',
+                loadComponent: () => import('./components/admin/employees-management/employees-management').then(c => c.EmployeesManagement),
+                canActivate: [authGuard],
+                data: { roles: ['admin'] }
+            },
+            {
                 path: '',
                 redirectTo: 'home',
                 pathMatch: 'full'

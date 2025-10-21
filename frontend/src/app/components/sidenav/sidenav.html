@@ -35,6 +35,12 @@
                     <span matListItemTitle>Revisar Solicitudes Pendientes</span>
                 </a>
                 }
+                @else if (userRole === "admin") {
+                <a mat-list-item routerLink="/empleados">
+                    <mat-icon matListItemIcon>groups</mat-icon>
+                    <span matListItemTitle>Gestión de Empleados</span>
+                </a>
+                }
 
             </mat-nav-list>
         </mat-sidenav>

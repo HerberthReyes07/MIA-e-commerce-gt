@@ -1,5 +1,6 @@
 package com.archivos.backend.repositories;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -27,5 +28,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
             limit 1
             """)
     User findModeratorWithLeastPendingRequests();
+
+    @Query("select u from User u join fetch u.role r where r.name != 'customer' and u.id != :currentUserId")
+    List<User> findAllEmployees(@Param("currentUserId") Long currentUserId);
 
 }

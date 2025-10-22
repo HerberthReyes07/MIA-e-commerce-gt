@@ -24,9 +24,13 @@
                     <span matListItemTitle>Home</span>
                 </a>
                 @if (userRole === "customer") {
-                <a mat-list-item routerLink="/mis-productos">
+                <a mat-list-item routerLink="/productos/mis-productos">
                     <mat-icon matListItemIcon>storefront</mat-icon>
                     <span matListItemTitle>Mis Productos</span>
+                </a>
+                <a mat-list-item routerLink="/productos/catalogo">
+                    <mat-icon matListItemIcon>local_mall</mat-icon>
+                    <span matListItemTitle>Catálogo de Productos</span>
                 </a>
                 }
                 @else if (userRole === "moderator") {

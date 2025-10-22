@@ -28,8 +28,20 @@ export const routes: Routes = [
                 data: { roles: ['customer', 'moderator', 'logistics', 'admin'] }
             },
             {
-                path: 'mis-productos',
+                path: 'productos/mis-productos',
                 loadComponent: () => import('./components/customer/my-products/my-products').then(c => c.MyProducts),
+                canActivate: [authGuard],
+                data: { roles: ['customer'] }
+            },
+            {
+                path: 'productos/catalogo',
+                loadComponent: () => import('./components/customer/product-catalog/product-catalog').then(c => c.ProductCatalog),
+                canActivate: [authGuard],
+                data: { roles: ['customer'] }
+            },
+            {
+                path: 'productos/catalogo/producto/:id',
+                loadComponent: () => import('./components/customer/product-view/product-view').then(c => c.ProductView),
                 canActivate: [authGuard],
                 data: { roles: ['customer'] }
             },

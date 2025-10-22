@@ -101,4 +101,10 @@ public class UserService {
         return userMapper.toUserDto(moderator);
     }
 
+    public UserDto getUserById(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new AppException("Usuario no encontrado", HttpStatus.NOT_FOUND));
+        return userMapper.toUserDto(user);
+    }
+
 }

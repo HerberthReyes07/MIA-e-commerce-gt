@@ -22,6 +22,26 @@ export interface CreateProductPayload {
   image?: File | null;
 }
 
+export interface ProductCatalogDto {
+  id: number;
+  name: string;
+  price: number;
+  isNew: boolean;
+  imageUrl: string;
+}
+
+export interface ProductDetailsDto {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  stock: number;
+  isNew: boolean;
+  imageUrl: string;
+  categories: CategoryDto[];
+  ownerName: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -58,6 +78,16 @@ export class ProductService {
 
   async getProductById(productId: number): Promise<ProductDto> {
     const response = await this.http.request<ProductDto>('GET', `/products/${productId}`);
+    return response.data;
+  }
+
+  async getProductCatalog(): Promise<ProductCatalogDto[]> {
+    const response = await this.http.request<ProductCatalogDto[]>('GET', '/products/catalog');
+    return response.data || [];
+  }
+
+  async getProductDetails(productId: number): Promise<ProductDetailsDto> {
+    const response = await this.http.request<ProductDetailsDto>('GET', `/products/catalog/${productId}/details`);
     return response.data;
   }
 

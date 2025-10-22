@@ -4,10 +4,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDate;
 import java.util.List;
+
+import com.archivos.backend.dtos.CategoryDto;
+import com.archivos.backend.dtos.ProductCatalogDto;
+import com.archivos.backend.dtos.ProductDetailsDto;
 import com.archivos.backend.dtos.ProductDto;
 import com.archivos.backend.dtos.ProductModerationRequestDto;
 import com.archivos.backend.dtos.UserDto;
 import com.archivos.backend.entities.Product;
+import com.archivos.backend.mappers.CategoryMapper;
 import com.archivos.backend.mappers.ProductMapper;
 import com.archivos.backend.repositories.ProductRepository;
 
@@ -21,6 +26,7 @@ public class ProductService {
     private final ProductMapper productMapper;
     private final ImageService imageService;
     private final ProductModerationRequestService productModerationRequestService;
+    private final CategoryMapper categoryMapper;
 
     public ProductDto createProduct(ProductDto productDto, MultipartFile image) {
 
@@ -74,9 +80,9 @@ public class ProductService {
 
         if (product.getReviewStatus() == 3) {
             productModerationRequestService.createModerationRequest(
-                ProductModerationRequestDto.builder()
-                        .productId(product.getId())
-                        .build());
+                    ProductModerationRequestDto.builder()
+                            .productId(product.getId())
+                            .build());
             product.setReviewStatus(1);
         }
 
@@ -91,6 +97,36 @@ public class ProductService {
         return products.stream()
                 .map(productMapper::toProductDto)
                 .toList();
+    }
+
+    public List<ProductCatalogDto> getProductCatalog() {
+        UserDto user = userService.getAuthUser();
+
+        return productRepository.findApprovedProducts(user.getId());
+    }
+
+    public ProductDetailsDto getProductDetailsById(Long id) {
+
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+        List<CategoryDto> categoryDtos = product.getCategories().stream()
+                .map(categoryMapper::toCategoryDto)
+                .toList();
+
+        UserDto owner = userService.getUserById(product.getOwner().getId());
+
+        return ProductDetailsDto.builder()
+                .id(product.getId())
+                .name(product.getName())
+                .description(product.getDescription())
+                .price(product.getPrice())
+                .stock(product.getStock())
+                .isNew(product.getIsNew())
+                .imageUrl(product.getImageUrl())
+                .categories(categoryDtos)
+                .ownerName(owner.getFirstName() + " " + owner.getLastName())
+                .build();
     }
 
 }

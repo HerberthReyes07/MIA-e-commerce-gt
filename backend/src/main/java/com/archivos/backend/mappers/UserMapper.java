@@ -13,10 +13,17 @@ import com.archivos.backend.entities.User;
 
 @Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface UserMapper {
-    
+
     @Mapping(target = "role", source = "role.name")
     @Mapping(target = "token", ignore = true)
     UserDto toUserDto(User user);
+
+    @Mapping(target = "role", ignore = true)
+    @Mapping(target = "password", ignore = true)
+    @Mapping(target = "registrationDate", ignore = true)
+    @Mapping(target = "address", ignore = true)
+    @Mapping(target = "phone", ignore = true)
+    User toUser(UserDto userDto);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "password", ignore = true)
@@ -38,5 +45,5 @@ public interface UserMapper {
     @Mapping(target = "role", ignore = true)
     @Mapping(target = "address", ignore = true)
     void updateEmployeeFromDto(EmployeeDto employeeDto, @MappingTarget User user);
-    
+
 }

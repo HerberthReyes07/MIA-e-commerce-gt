@@ -1,0 +1,41 @@
+<div class="page-container">
+	<h1 class="page-title">
+		<mat-icon>shopping_bag</mat-icon>
+		Catálogo de Productos
+	</h1>
+</div>
+
+@if (isLoading) {
+	<div class="state-text">Cargando catálogo…</div>
+} @else if (isEmpty) {
+	<div class="state-text">No hay productos disponibles por ahora.</div>
+} @else {
+	<div class="cards-grid">
+		@for (p of items; track p.id) {
+			<mat-card class="product-card mat-elevation-z2">
+				<div class="image-wrapper">
+					<img [src]="getImageUrl(p.imageUrl)" [alt]="p.name" />
+					@if (p.isNew) {
+						<span class="badge-new">Nuevo</span>
+					} @else {
+                        <span class="badge-used">Usado</span>
+                    }
+				</div>
+
+				<mat-card-content>
+					<div class="name">{{ p.name }}</div>
+					<div class="price">Q {{ p.price | number:'1.2-2' }}</div>
+				</mat-card-content>
+
+				<mat-card-actions>
+					<button mat-icon-button color="primary" (click)="viewMore(p)" matTooltip="Ver más">
+						<mat-icon>visibility</mat-icon>
+					</button>
+					<button mat-mini-fab color="accent" (click)="addToCart(p)" matTooltip="Agregar al carrito">
+						<mat-icon>add_shopping_cart</mat-icon>
+					</button>
+				</mat-card-actions>
+			</mat-card>
+		}
+	</div>
+}

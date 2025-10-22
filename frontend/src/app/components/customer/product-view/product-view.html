@@ -1,0 +1,122 @@
+<div class="container">
+  <!-- Loading state -->
+  @if (isLoading) {
+    <div class="state-message">
+      <mat-icon>hourglass_empty</mat-icon>
+      <p>Cargando producto...</p>
+    </div>
+  }
+
+  <!-- Error state -->
+  @else if (error || !product) {
+    <div class="state-message error">
+      <mat-icon>error_outline</mat-icon>
+      <p>No se pudo cargar el producto</p>
+      <button mat-raised-button color="primary" (click)="goBackToCatalog()">
+        <mat-icon>arrow_back</mat-icon>
+        Volver al catálogo
+      </button>
+    </div>
+  }
+
+  <!-- Product content -->
+  @else {
+    <div class="content">
+      <!-- Back button -->
+      <div class="back-button-container">
+        <button mat-button color="primary" (click)="goBackToCatalog()">
+          <mat-icon>arrow_back</mat-icon>
+          Volver al catálogo
+        </button>
+      </div>
+
+      <!-- Product layout -->
+      <div class="product-layout">
+        <!-- Top row: Image and Info -->
+        <div class="top-row">
+          <!-- Image section -->
+          <mat-card class="image-card">
+            <div class="image-container">
+              @if (getImageUrl()) {
+                <img [src]="getImageUrl()" [alt]="product.name" />
+              } @else {
+                <div class="no-image">
+                  <mat-icon>image_not_supported</mat-icon>
+                  <span>Sin imagen</span>
+                </div>
+              }
+            </div>
+            
+            @if (product.isNew) {
+              <div class="badge-new">Nuevo</div>
+            } @else {
+              <div class="badge-used">Usado</div>
+            }
+          </mat-card>
+
+          <!-- Product info card -->
+          <mat-card class="info-card">
+            <mat-card-header>
+              <mat-card-title>{{ product.name }}</mat-card-title>
+            </mat-card-header>
+            
+            <mat-card-content>
+              <div class="price-section">
+                <span class="price">Q {{ product.price | number:'1.2-2' }}</span>
+              </div>
+
+              <div class="field">
+                <span class="label">Stock disponible:</span>
+                <span class="value">{{ product.stock }} unidades</span>
+              </div>
+
+              <div class="field">
+                <span class="label">Condición:</span>
+                <span class="value">{{ product.isNew ? 'Nuevo' : 'Usado' }}</span>
+              </div>
+
+              <div class="field">
+                <span class="label">Vendedor:</span>
+                <span class="value">{{ product.ownerName }}</span>
+              </div>
+
+              @if (product.categories && product.categories.length > 0) {
+                <div class="field-vertical">
+                  <span class="label">Categorías:</span>
+                  <mat-chip-set>
+                    @for (cat of product.categories; track cat.id) {
+                      <mat-chip>{{ cat.name }}</mat-chip>
+                    }
+                  </mat-chip-set>
+                </div>
+              }
+            </mat-card-content>
+
+            <mat-card-actions>
+              <button 
+                mat-raised-button 
+                color="accent" 
+                class="add-to-cart-btn"
+                (click)="addToCart()">
+                <mat-icon>add_shopping_cart</mat-icon>
+                Agregar al carrito
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+
+        <!-- Bottom row: Description (full width) -->
+        @if (product.description) {
+          <mat-card class="description-card">
+            <mat-card-header>
+              <mat-card-title>Descripción</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <p class="description">{{ product.description }}</p>
+            </mat-card-content>
+          </mat-card>
+        }
+      </div>
+    </div>
+  }
+</div>

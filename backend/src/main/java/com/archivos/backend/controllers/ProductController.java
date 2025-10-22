@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.archivos.backend.dtos.ProductCatalogDto;
+import com.archivos.backend.dtos.ProductDetailsDto;
 import com.archivos.backend.dtos.ProductDto;
 import com.archivos.backend.services.ProductService;
 
@@ -50,6 +52,18 @@ public class ProductController {
     public ResponseEntity<ProductDto> getProductById(@PathVariable("id") Long id) {
         ProductDto product = productService.getProductById(id);
         return ResponseEntity.ok(product);
+    }
+
+    @GetMapping("/products/catalog")
+    public ResponseEntity<List<ProductCatalogDto>> getProductCatalog() {
+        List<ProductCatalogDto> products = productService.getProductCatalog();
+        return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/products/catalog/{id}/details")
+    public ResponseEntity<ProductDetailsDto> getProductDetails(@PathVariable("id") Long id) {
+        ProductDetailsDto productDetails = productService.getProductDetailsById(id);
+        return ResponseEntity.ok(productDetails);
     }
 
     @PutMapping("/products/{id}")

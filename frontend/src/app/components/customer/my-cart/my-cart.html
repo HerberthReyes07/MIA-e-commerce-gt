@@ -1,0 +1,125 @@
+<div class="container">
+    <div class="page-header">
+        <h1 class="page-title">
+            <mat-icon>shopping_cart</mat-icon>
+            Mi Carrito
+        </h1>
+        @if (!isEmpty && !isLoading) {
+            <button 
+                mat-stroked-button 
+                color="warn" 
+                (click)="clearCart()"
+                class="clear-cart-btn">
+                <mat-icon>delete_sweep</mat-icon>
+                Limpiar carrito
+            </button>
+        }
+    </div>
+
+    <!-- Loading state -->
+    @if (isLoading) {
+    <div class="state-message">
+        <mat-icon>hourglass_empty</mat-icon>
+        <p>Cargando carrito...</p>
+    </div>
+    }
+
+    <!-- Empty state -->
+    @else if (isEmpty) {
+    <div class="state-message">
+        <mat-icon>shopping_cart</mat-icon>
+        <p>Tu carrito está vacío</p>
+    </div>
+    }
+
+    <!-- Cart content -->
+    @else {
+    <div class="cart-layout">
+        <!-- Products table -->
+        <div class="products-section">
+            <table class="products-table">
+                <thead>
+                    <tr>
+                        <th class="col-product">Producto</th>
+                        <th class="col-quantity">Cantidad</th>
+                        <th class="col-total">Total</th>
+                        <th class="col-actions"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (item of cartItems; track item.cartItemId) {
+                    <tr class="product-row">
+                        <!-- Product info -->
+                        <td class="product-info">
+                            <div class="product-content">
+                                <div class="product-image">
+                                    @if (getImageUrl(item.productImageUrl)) {
+                                    <img [src]="getImageUrl(item.productImageUrl)" [alt]="item.productName" />
+                                    } @else {
+                                    <div class="no-image">
+                                        <mat-icon>image_not_supported</mat-icon>
+                                    </div>
+                                    }
+                                </div>
+                                <div class="product-details">
+                                    <div class="product-name">{{ item.productName }}</div>
+                                    <div class="product-price">Q {{ item.productPrice | number:'1.2-2' }}</div>
+                                    @if (item.productIsNew) {
+                                    <span class="badge-new" style="width: 33px;">Nuevo</span>
+                                    } @else {
+                                    <span class="badge-used" style="width: 33px;">Usado</span>
+                                    }
+                                </div>
+                            </div>
+                        </td>
+
+                        <!-- Quantity selector -->
+                        <td class="quantity-cell">
+                            <mat-form-field appearance="outline" class="quantity-select">
+                                <mat-select [value]="item.quantity"
+                                    (selectionChange)="onQuantityChange(item, $event.value)">
+                                    @for (qty of quantityOptions; track qty) {
+                                    <mat-option [value]="qty">{{ qty }}</mat-option>
+                                    }
+                                </mat-select>
+                            </mat-form-field>
+                        </td>
+
+                        <!-- Item total -->
+                        <td class="total-cell">
+                            <span class="item-total">Q {{ getItemTotal(item) | number:'1.2-2' }}</span>
+                        </td>
+
+                        <!-- Remove button -->
+                        <td class="actions-cell" style="padding-left: 0px;">
+                            <button mat-icon-button color="warn" (click)="removeItem(item)"
+                                matTooltip="Eliminar producto">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Summary card -->
+        <mat-card class="summary-card">
+            <mat-card-header>
+                <mat-card-title>Resumen de la compra</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="summary-row">
+                    <span class="summary-label">Total a pagar:</span>
+                    <span class="summary-total">Q {{ getCartTotal() | number:'1.2-2' }}</span>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-raised-button color="primary" class="checkout-btn">
+                    Pagar
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+    }
+</div>

@@ -55,6 +55,7 @@ public interface CartMapper {
         dto.setId(item.getId());
         dto.setQuantity(item.getQuantity());
         dto.setProductId(item.getProduct().getId());
+        dto.setCartId(item.getCart().getId());
         return dto;
     }
 

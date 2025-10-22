@@ -7,6 +7,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ProductCatalogDto, ProductService } from '../../../services/product-service';
 import { environment } from '../../../../environments/environment';
+import { CartService } from '../../../services/cart-service';
+import { AxiosService } from '../../../services/axios-service';
+import { SnackbarService } from '../../../services/snackbar-service';
 
 @Component({
   selector: 'app-product-catalog',
@@ -28,8 +31,11 @@ export class ProductCatalog implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private router: Router
-  ) {}
+    private cartService: CartService,
+    private router: Router,
+    private http: AxiosService,
+    private snackbarService: SnackbarService
+  ) { }
 
   async ngOnInit(): Promise<void> {
     this.isLoading = true;
@@ -54,8 +60,15 @@ export class ProductCatalog implements OnInit {
     this.router.navigate(['/productos/catalogo/producto', item.id]);
   }
 
-  addToCart(item: ProductCatalogDto): void {
-    // TODO: Implementar lógica de agregar al carrito
-    console.log('Agregar al carrito:', item);
+  async addToCart(item: ProductCatalogDto): Promise<void> {
+
+    try {
+      await this.cartService.addItemToCart({ productId: item.id, quantity: 1 });
+      this.snackbarService.showSuccess('Producto agregado al carrito');
+    } catch (error) {
+      console.error('Error al agregar producto al carrito:', error);
+      const message = this.http.getErrorMessage(error);
+      this.snackbarService.showError('Error al agregar producto al carrito: ' + message);
+    }
   }
 }

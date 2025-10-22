@@ -10,6 +10,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { UserService, EmployeeDto } from '../../../services/user-service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { EmployeeForm } from '../employee-form/employee-form';
+import { SnackbarService } from '../../../services/snackbar-service';
+import { AxiosService } from '../../../services/axios-service';
 
 @Component({
   selector: 'app-employees-management',
@@ -36,7 +38,7 @@ export class EmployeesManagement implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private userService: UserService, private dialog: MatDialog) {}
+  constructor(private userService: UserService, private dialog: MatDialog, private http: AxiosService, private snackbarService: SnackbarService) {}
 
   async ngAfterViewInit(): Promise<void> {
     this.dataSource.paginator = this.paginator;
@@ -74,8 +76,17 @@ export class EmployeesManagement implements AfterViewInit {
           this.dataSource.data = employees;
           this.isEmpty = employees.length === 0;
           this.paginator.firstPage();
+
+          if (employee) {
+            this.snackbarService.showSuccess('Empleado actualizado correctamente');
+          } else {
+            this.snackbarService.showSuccess('Empleado creado correctamente');
+          }
+
         } catch (err) {
           console.error('Error al recargar empleados:', err);
+          const message = this.http.getErrorMessage(err);
+          this.snackbarService.showError('Error al recargar empleados: ' + message);
         }
       }
     });

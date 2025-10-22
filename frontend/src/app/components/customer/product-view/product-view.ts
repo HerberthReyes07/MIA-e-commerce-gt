@@ -6,7 +6,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { ProductDetailsDto, ProductService } from '../../../services/product-service';
+import { CartService } from '../../../services/cart-service';
 import { environment } from '../../../../environments/environment';
+import { AxiosService } from '../../../services/axios-service';
+import { SnackbarService } from '../../../services/snackbar-service';
 
 @Component({
   selector: 'app-product-view',
@@ -29,8 +32,11 @@ export class ProductView implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private productService: ProductService
-  ) {}
+    private productService: ProductService,
+    private cartService: CartService,
+    private http: AxiosService,
+    private snackbarService: SnackbarService
+  ) { }
 
   async ngOnInit(): Promise<void> {
     const id = this.route.snapshot.paramMap.get('id');
@@ -51,8 +57,8 @@ export class ProductView implements OnInit {
   }
 
   getImageUrl(): string {
-    return this.product?.imageUrl 
-      ? `${environment.apiBaseUrl}${this.product.imageUrl}` 
+    return this.product?.imageUrl
+      ? `${environment.apiBaseUrl}${this.product.imageUrl}`
       : '';
   }
 
@@ -60,8 +66,21 @@ export class ProductView implements OnInit {
     this.router.navigate(['/productos/catalogo']);
   }
 
-  addToCart(): void {
-    // TODO: Implementar lógica de agregar al carrito
-    console.log('Agregar al carrito:', this.product);
+  async addToCart(): Promise<void> {
+    if (!this.product) return;
+
+    try {
+      await this.cartService.addItemToCart({
+        productId: this.product.id,
+        quantity: 1
+      });
+      console.log('Producto agregado al carrito');
+      this.snackbarService.showSuccess('Producto agregado al carrito');
+      // TODO: Mostrar snackbar de confirmación
+    } catch (err) {
+      console.error('Error al agregar producto al carrito:', err);
+      const message = this.http.getErrorMessage(err);
+      this.snackbarService.showError('Error al agregar producto al carrito: ' + message);
+    }
   }
 }

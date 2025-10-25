@@ -1,0 +1,15 @@
+[build]
+  # Directorio base donde está tu proyecto Angular
+  base = "frontend"
+  
+  # Comando para construir tu aplicación
+  command = "npm run build"
+  
+  # Directorio donde Angular genera los archivos de producción
+  # Con Angular 17+ usando @angular/build:application, el output está en dist/frontend/browser
+  publish = "dist/frontend/browser"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

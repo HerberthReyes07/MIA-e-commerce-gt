@@ -57,6 +57,7 @@ export class CartService {
   }
 
   async getCartDetails(): Promise<CartDetailsDto[]> {
+    console.log("En getCartDetails");
     const response = await this.http.request<CartDetailsDto[]>('GET', '/cart/details');
     return response.data;
   }

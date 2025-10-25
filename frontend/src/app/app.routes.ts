@@ -51,6 +51,12 @@ export const routes: Routes = [
                 canActivate: [authGuard],
                 data: { roles: ['customer'] }
             },
+                {
+                    path: 'pagar',
+                    loadComponent: () => import('./components/customer/cart-payment/cart-payment').then(c => c.CartPayment),
+                    canActivate: [authGuard],
+                    data: { roles: ['customer'] }
+                },
             {
                 path: 'productos/revisar-solicitudes-pendientes',
                 loadComponent: () => import('./components/moderator/my-pending-requests/my-pending-requests').then(c => c.MyPendingRequests),

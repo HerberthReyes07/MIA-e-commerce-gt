@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -32,7 +33,12 @@ export class MyCart implements OnInit {
   isEmpty = false;
   quantityOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-  constructor(private cartService: CartService, private http: AxiosService, private snackbarService: SnackbarService) { }
+  constructor(
+    private cartService: CartService,
+    private http: AxiosService,
+    private snackbarService: SnackbarService,
+    private router: Router
+  ) { }
 
   async ngOnInit(): Promise<void> {
     await this.loadCartDetails();
@@ -99,5 +105,13 @@ export class MyCart implements OnInit {
       const message = this.http.getErrorMessage(err);
       this.snackbarService.showError('Error al limpiar el carrito: ' + message);
     }
+  }
+
+  navigateToPayment(): void {
+    if (this.cartItems.length === 0) {
+      this.snackbarService.showWarning('El carrito está vacío');
+      return;
+    }
+    this.router.navigate(['/pagar']);
   }
 }

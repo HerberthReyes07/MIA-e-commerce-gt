@@ -1,0 +1,427 @@
+.container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 24px;
+}
+
+.page-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 32px;
+}
+
+.page-title {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin: 0;
+	font-size: 28px;
+	font-weight: 500;
+}
+
+.payment-stepper {
+	background: transparent;
+}
+
+.step-content {
+	margin-top: 24px;
+	min-height: 400px;
+}
+
+.step-content h3 {
+	font-size: 20px;
+	font-weight: 500;
+	margin-bottom: 24px;
+}
+
+/* Loading and empty states */
+.loading-message,
+.empty-message {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 48px 24px;
+	text-align: center;
+}
+
+.loading-message mat-icon,
+.empty-message mat-icon {
+	font-size: 64px;
+	width: 64px;
+	height: 64px;
+	margin-bottom: 16px;
+	color: rgba(0, 0, 0, 0.38);
+}
+
+.loading-message-small {
+	text-align: center;
+	padding: 16px;
+	color: rgba(0, 0, 0, 0.54);
+}
+
+/* Step 1: Products Review */
+.products-review {
+	max-width: 900px;
+}
+
+.products-list {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	margin-bottom: 24px;
+}
+
+.product-item {
+	padding: 16px;
+}
+
+.product-content {
+	display: flex;
+	gap: 16px;
+	align-items: center;
+}
+
+.product-image {
+	width: 80px;
+	height: 80px;
+	flex-shrink: 0;
+	overflow: hidden;
+	border-radius: 8px;
+	background: #f5f5f5;
+}
+
+.product-image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.no-image {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: rgba(0, 0, 0, 0.26);
+}
+
+.product-info {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.product-name {
+	font-size: 16px;
+	font-weight: 500;
+}
+
+.product-details {
+	display: flex;
+	gap: 16px;
+	align-items: center;
+	font-size: 14px;
+	color: rgba(0, 0, 0, 0.6);
+}
+
+.product-price {
+	font-weight: 500;
+}
+
+.product-quantity {
+	color: rgba(0, 0, 0, 0.54);
+}
+
+.badge-new {
+	display: inline-block;
+	padding: 4px 8px;
+	background: #4caf50;
+	color: white;
+	border-radius: 4px;
+	font-size: 12px;
+	font-weight: 500;
+	width: fit-content;
+}
+
+.badge-used {
+	display: inline-block;
+	padding: 4px 8px;
+	background: #3063D1;
+	color: white;
+	border-radius: 4px;
+	font-size: 12px;
+	font-weight: 500;
+	width: fit-content;
+}
+
+.product-total {
+	font-size: 18px;
+	font-weight: 500;
+	color: #1976d2;
+}
+
+.total-card {
+	padding: 20px;
+	background: #f5f5f5;
+}
+
+.total-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.total-label {
+	font-size: 18px;
+	font-weight: 500;
+}
+
+.total-amount {
+	font-size: 24px;
+	font-weight: 600;
+	color: #1976d2;
+}
+
+/* Step 2: Payment Method */
+.payment-method-group {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	margin-bottom: 24px;
+}
+
+.payment-method-option {
+	margin-bottom: 8px;
+}
+
+.saved-cards-container {
+	margin: 16px 0 16px 32px;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.saved-card {
+	padding: 16px;
+	cursor: pointer;
+	transition: all 0.2s;
+	border: 2px solid transparent;
+}
+
+.saved-card:hover {
+	border-color: #1976d2;
+	transform: translateY(-2px);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.saved-card.selected {
+	border-color: #1976d2;
+	background-color: #e3f2fd;
+}
+
+.card-content {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+
+.card-icon {
+	font-size: 36px;
+	width: 36px;
+	height: 36px;
+	color: #1976d2;
+}
+
+.card-info {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.card-number {
+	font-size: 16px;
+	font-weight: 500;
+	font-family: monospace;
+}
+
+.card-holder {
+	font-size: 14px;
+	color: rgba(0, 0, 0, 0.6);
+}
+
+.card-alias {
+	font-size: 13px;
+	color: #1976d2;
+	font-style: italic;
+}
+
+.card-expiry {
+	font-size: 12px;
+	color: rgba(0, 0, 0, 0.54);
+}
+
+.check-icon {
+	color: #4caf50;
+	font-size: 28px;
+	width: 28px;
+	height: 28px;
+}
+
+.new-card-panel {
+	margin: 16px 0 16px 32px;
+}
+
+.new-card-form {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	padding-top: 16px;
+}
+
+.new-card-form mat-form-field {
+	width: 100%;
+}
+
+.form-row {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 16px;
+}
+
+/* Step 3: Confirmation */
+.summary-section {
+	margin-bottom: 16px;
+}
+
+.summary-product {
+	display: flex;
+	justify-content: space-between;
+	padding: 8px 0;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.summary-product:last-child {
+	border-bottom: none;
+}
+
+.summary-product-name {
+	font-size: 14px;
+}
+
+.summary-product-price {
+	font-weight: 500;
+	color: #1976d2;
+}
+
+.summary-payment {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+
+.summary-payment mat-icon {
+	font-size: 32px;
+	width: 32px;
+	height: 32px;
+	color: #1976d2;
+}
+
+.payment-detail {
+	font-size: 14px;
+	color: rgba(0, 0, 0, 0.6);
+	margin-top: 4px;
+}
+
+.payment-note {
+	font-size: 12px;
+	color: #4caf50;
+	font-style: italic;
+	margin-top: 4px;
+}
+
+.summary-total {
+	padding: 20px;
+	background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+	color: white;
+}
+
+.total-final {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.total-final-label {
+	font-size: 20px;
+	font-weight: 500;
+}
+
+.total-final-amount {
+	font-size: 32px;
+	font-weight: 700;
+}
+
+/* Step Actions */
+.step-actions {
+	display: flex;
+	justify-content: space-between;
+	gap: 16px;
+	margin-top: 32px;
+}
+
+.pay-button {
+	padding: 0 32px;
+	font-size: 16px;
+}
+
+/* Datepicker personalización para mes/año */
+::ng-deep .month-year-picker .mat-calendar-period-button {
+	pointer-events: none;
+}
+
+::ng-deep .month-year-picker .mat-calendar-arrow {
+	display: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+	.container {
+		padding: 16px;
+	}
+
+	.page-header {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 16px;
+	}
+
+	.page-title {
+		font-size: 24px;
+	}
+
+	.product-content {
+		flex-direction: column;
+		text-align: center;
+	}
+
+	.product-image {
+		width: 100%;
+		height: 200px;
+	}
+
+	.form-row {
+		grid-template-columns: 1fr;
+	}
+
+	.step-actions {
+		flex-direction: column;
+	}
+
+	.step-actions button {
+		width: 100%;
+	}
+}

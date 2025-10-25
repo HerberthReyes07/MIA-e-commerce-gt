@@ -56,7 +56,8 @@ public class CartService {
 
         if (item != null) {
             if (item.getQuantity() >= productStock) {
-                throw new AppException("Tu carrito ya tiene la cantidad máxima de este producto", HttpStatus.BAD_REQUEST);
+                throw new AppException("Tu carrito ya tiene la cantidad máxima de este producto",
+                        HttpStatus.BAD_REQUEST);
             }
             item.setQuantity(item.getQuantity() + 1);
             cartItemRepository.save(item);
@@ -85,9 +86,8 @@ public class CartService {
 
     public List<CartDetailsDto> getCartDetails() {
         UserDto customer = userService.getAuthUser();
-        
-        Cart cart = cartRepository.findActiveCart(customer.getId()).orElseGet(null);
 
+        Cart cart = cartRepository.findActiveCart(customer.getId()).orElse(null);
         if (cart == null) {
             return new ArrayList<>();
         }

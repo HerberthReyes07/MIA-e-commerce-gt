@@ -1,0 +1,19 @@
+<div class="reports-dashboard">
+	<mat-card class="controls">
+		<mat-form-field appearance="outline" class="select-field">
+			<mat-label>Selecciona un reporte</mat-label>
+			<mat-select [(value)]="selectedReport">
+				<mat-option *ngFor="let cfg of reportConfigs" [value]="cfg">
+					{{ cfg.title }}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+	</mat-card>
+
+	<app-report-viewer 
+		[title]="selectedReport.title"
+		[reportType]="selectedReport.type"
+		[columns]="selectedReport.columns"
+		[hasDateFilter]="selectedReport.hasDateFilter">
+	</app-report-viewer>
+</div>

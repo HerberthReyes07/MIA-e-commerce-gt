@@ -1,0 +1,14 @@
+.reports-dashboard {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.controls {
+	padding: 16px;
+}
+
+.select-field {
+	width: 100%;
+	max-width: 480px;
+}

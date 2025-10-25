@@ -1,0 +1,53 @@
+.report-viewer {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.header-card {
+	padding: 0px 24px;
+    padding-top: 18px;
+}
+
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 24px;
+	flex-wrap: wrap;
+}
+
+.header h2 {
+	margin: 0;
+	font-size: 1.5rem;
+	font-weight: 500;
+	color: rgba(0, 0, 0, 0.87);
+	white-space: nowrap;
+}
+
+.filters {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	flex-wrap: wrap;
+}
+
+.date-field {
+	min-width: 320px;
+}
+
+.table-wrapper {
+	overflow: auto;
+}
+
+.full-width {
+	width: 100%;
+}
+
+.no-data, .loading {
+	padding: 24px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	color: rgba(0,0,0,0.6);
+}

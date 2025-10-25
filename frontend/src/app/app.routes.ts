@@ -51,12 +51,12 @@ export const routes: Routes = [
                 canActivate: [authGuard],
                 data: { roles: ['customer'] }
             },
-                {
-                    path: 'pagar',
-                    loadComponent: () => import('./components/customer/cart-payment/cart-payment').then(c => c.CartPayment),
-                    canActivate: [authGuard],
-                    data: { roles: ['customer'] }
-                },
+            {
+                path: 'pagar',
+                loadComponent: () => import('./components/customer/cart-payment/cart-payment').then(c => c.CartPayment),
+                canActivate: [authGuard],
+                data: { roles: ['customer'] }
+            },
             {
                 path: 'productos/revisar-solicitudes-pendientes',
                 loadComponent: () => import('./components/moderator/my-pending-requests/my-pending-requests').then(c => c.MyPendingRequests),
@@ -66,6 +66,12 @@ export const routes: Routes = [
             {
                 path: 'empleados',
                 loadComponent: () => import('./components/admin/employees-management/employees-management').then(c => c.EmployeesManagement),
+                canActivate: [authGuard],
+                data: { roles: ['admin'] }
+            },
+            {
+                path: 'reportes',
+                loadComponent: () => import('./components/admin/reports/reports-dashboard/reports-dashboard').then(c => c.ReportsDashboard),
                 canActivate: [authGuard],
                 data: { roles: ['admin'] }
             },

@@ -7,8 +7,7 @@
         @if (userRole === "customer") {
         <button matIconButton routerLink="/mi-carrito" [matBadge]="cartItemsCount()"
             [matBadgeHidden]="cartItemsCount() === 0" aria-hidden="false"
-            [attr.aria-label]="'Carrito de compras con ' + cartItemsCount() + ' productos'"
-            style="margin-right: 20px;">
+            [attr.aria-label]="'Carrito de compras con ' + cartItemsCount() + ' productos'" style="margin-right: 20px;">
             <mat-icon>shopping_cart</mat-icon>
         </button>
         }
@@ -55,6 +54,10 @@
                 <a mat-list-item routerLink="/empleados">
                     <mat-icon matListItemIcon>groups</mat-icon>
                     <span matListItemTitle>Gestión de Empleados</span>
+                </a>
+                <a mat-list-item routerLink="/reportes">
+                    <mat-icon matListItemIcon>assessment</mat-icon>
+                    <span matListItemTitle>Reportes</span>
                 </a>
                 }
 

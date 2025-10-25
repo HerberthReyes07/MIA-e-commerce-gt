@@ -1,3 +1,4 @@
 export const environment = {
-    apiBaseUrl: 'http://localhost:8080'
+    production: true,
+    apiBaseUrl: 'https://bennett-smartish-waterlessly.ngrok-free.dev'
 };

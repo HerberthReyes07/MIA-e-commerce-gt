@@ -33,6 +33,9 @@ export class AxiosService {
       mergedHeaders['Authorization'] = `Bearer ${token}`;
     }
 
+    // Añadir cabecera para evitar la advertencia de ngrok en modo gratuito
+    mergedHeaders['ngrok-skip-browser-warning'] = 'true';
+
     // Si el cuerpo es FormData, dejar que Axios establezca el Content-Type con boundary
     if (typeof FormData !== 'undefined' && data instanceof FormData) {
       delete mergedHeaders['Content-Type'];

@@ -55,7 +55,7 @@ export class ProductCatalog implements OnInit {
   getImageUrl(imagePath: string): string {
     if (!imagePath) return '';
 
-    /* // Si el backend está detrás de ngrok, usar el proxy del mismo origen para añadir el header necesario
+    // Si el backend está detrás de ngrok, usar el proxy del mismo origen para añadir el header necesario
     const isNgrok = /ngrok/i.test(environment.apiBaseUrl);
     if (isNgrok) {
       const path = imagePath.startsWith('/') ? imagePath : `/${imagePath}`;
@@ -67,8 +67,7 @@ export class ProductCatalog implements OnInit {
     const base = environment.apiBaseUrl.endsWith('/')
       ? environment.apiBaseUrl.slice(0, -1)
       : environment.apiBaseUrl;
-    return `${base}${imagePath}`; */
-    return imagePath ? `${environment.apiBaseUrl}${imagePath}` : '';
+    return `${base}${imagePath}`;
   }
 
   viewMore(item: ProductCatalogDto): void {

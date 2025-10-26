@@ -13,12 +13,14 @@
   # Usar ruta relativa desde la raíz del repo para evitar ambigüedad con base
   directory = "frontend/netlify/functions"
 
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-
+# Los redirects más específicos deben ir PRIMERO
 [[redirects]]
   from = "/api/img"
   to = "/.netlify/functions/img-proxy"
+  status = 200
+
+# SPA fallback debe ir AL FINAL para no capturar rutas específicas
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
   status = 200

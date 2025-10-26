@@ -55,12 +55,13 @@ export class ProductCatalog implements OnInit {
   getImageUrl(imagePath: string): string {
     if (!imagePath) return '';
 
-    // Si el backend está detrás de ngrok, usar el proxy del mismo origen para añadir el header necesario
+    // Si el backend está detrás de ngrok, usar el proxy del mismo origen (función Netlify)
     const isNgrok = /ngrok/i.test(environment.apiBaseUrl);
     if (isNgrok) {
       const path = imagePath.startsWith('/') ? imagePath : `/${imagePath}`;
       const qs = new URLSearchParams({ path });
-      return `/api/img?${qs.toString()}`;
+      // Usar la ruta directa de Netlify Functions
+      return `/.netlify/functions/img-proxy?${qs.toString()}`;
     }
 
     // Caso normal (no ngrok): devolver URL absoluta directa

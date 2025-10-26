@@ -1,1 +1,5 @@
+# Permitir que las funciones de Netlify funcionen (no redirigir)
+/.netlify/* /.netlify/:splat 200
+
+# SPA fallback - debe ir al final
 /* /index.html 200

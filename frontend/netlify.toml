@@ -10,13 +10,5 @@
   publish = "dist/frontend/browser"
 
 [functions]
-  # Usar ruta relativa desde la raíz del repo para evitar ambigüedad con base
+  # IMPORTANTE: El directorio debe ser relativo a la raíz del REPOSITORIO, no al base
   directory = "frontend/netlify/functions"
-
-# SPA fallback - debe capturar todo EXCEPTO las funciones serverless
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-  # No aplicar este redirect a las funciones de Netlify
-  force = false

@@ -9,7 +9,16 @@
   # Con Angular 17+ usando @angular/build:application, el output está en dist/frontend/browser
   publish = "dist/frontend/browser"
 
+[functions]
+  # Usar ruta relativa desde la raíz del repo para evitar ambigüedad con base
+  directory = "frontend/netlify/functions"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/api/img"
+  to = "/.netlify/functions/img-proxy"
   status = 200

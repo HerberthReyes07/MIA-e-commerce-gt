@@ -55,23 +55,19 @@ export class ProductCatalog implements OnInit {
   getImageUrl(imagePath: string): string {
     if (!imagePath) return '';
 
-    // Construir URL absoluta y agregar bypass para la advertencia de ngrok
+    // Si el backend está detrás de ngrok, usar el proxy del mismo origen para añadir el header necesario
+    const isNgrok = /ngrok/i.test(environment.apiBaseUrl);
+    if (isNgrok) {
+      const path = imagePath.startsWith('/') ? imagePath : `/${imagePath}`;
+      const qs = new URLSearchParams({ path });
+      return `/api/img?${qs.toString()}`;
+    }
+
+    // Caso normal (no ngrok): devolver URL absoluta directa
     const base = environment.apiBaseUrl.endsWith('/')
       ? environment.apiBaseUrl.slice(0, -1)
       : environment.apiBaseUrl;
-    const fullUrl = `${base}${imagePath}`;
-
-    try {
-      const url = new URL(fullUrl);
-      // Si estamos usando un túnel de ngrok gratuito, agregar el parámetro para saltar el warning
-      //if (/ngrok/i.test(url.hostname)) {
-        url.searchParams.set('ngrok-skip-browser-warning', 'true');
-      //}
-      return url.toString();
-    } catch {
-      // En caso de que el entorno no soporte URL o la cadena no sea válida, devolver la concatenación básica
-      return fullUrl;
-    }
+    return `${base}${imagePath}`;
   }
 
   viewMore(item: ProductCatalogDto): void {

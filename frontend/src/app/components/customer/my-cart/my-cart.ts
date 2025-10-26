@@ -8,9 +8,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CartDetailsDto, CartService } from '../../../services/cart-service';
-import { environment } from '../../../../environments/environment';
 import { SnackbarService } from '../../../services/snackbar-service';
 import { AxiosService } from '../../../services/axios-service';
+import { ImageService } from '../../../services/image-service';
 
 @Component({
   selector: 'app-my-cart',
@@ -37,7 +37,8 @@ export class MyCart implements OnInit {
     private cartService: CartService,
     private http: AxiosService,
     private snackbarService: SnackbarService,
-    private router: Router
+    private router: Router,
+    private imageService: ImageService
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -59,7 +60,7 @@ export class MyCart implements OnInit {
   }
 
   getImageUrl(imagePath: string): string {
-    return imagePath ? `${environment.apiBaseUrl}${imagePath}` : '';
+    return this.imageService.getImageUrl(imagePath);
   }
 
   getItemTotal(item: CartDetailsDto): number {

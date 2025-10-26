@@ -7,9 +7,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { ProductDetailsDto, ProductService } from '../../../services/product-service';
 import { CartService } from '../../../services/cart-service';
-import { environment } from '../../../../environments/environment';
 import { AxiosService } from '../../../services/axios-service';
 import { SnackbarService } from '../../../services/snackbar-service';
+import { ImageService } from '../../../services/image-service';
 
 @Component({
   selector: 'app-product-view',
@@ -35,7 +35,8 @@ export class ProductView implements OnInit {
     private productService: ProductService,
     private cartService: CartService,
     private http: AxiosService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private imageService: ImageService
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -57,9 +58,7 @@ export class ProductView implements OnInit {
   }
 
   getImageUrl(): string {
-    return this.product?.imageUrl
-      ? `${environment.apiBaseUrl}${this.product.imageUrl}`
-      : '';
+    return this.imageService.getImageUrl(this.product?.imageUrl);
   }
 
   goBackToCatalog(): void {

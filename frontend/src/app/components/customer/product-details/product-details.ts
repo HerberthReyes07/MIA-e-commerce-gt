@@ -5,8 +5,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { ProductDto } from '../../../services/product-service';
-import { environment } from '../../../../environments/environment';
 import { ProductModerationRequestService } from '../../../services/product-moderation-request-service';
+import { ImageService } from '../../../services/image-service';
 
 @Component({
   selector: 'app-product-details',
@@ -24,6 +24,7 @@ import { ProductModerationRequestService } from '../../../services/product-moder
 export class ProductDetails {
   readonly data: ProductDto = inject(MAT_DIALOG_DATA);
   readonly dialogRef = inject(MatDialogRef<ProductDetails>);
+  private imageService = inject(ImageService);
   rejectionReason: string | null = null;
 
   constructor(private productModerationRequestService: ProductModerationRequestService) {
@@ -62,7 +63,7 @@ export class ProductDetails {
   }
 
   getImageUrl(imagePath?: string): string {
-    return imagePath ? `${environment.apiBaseUrl}${imagePath}` : '';
+    return this.imageService.getImageUrl(imagePath);
   }
 
 }

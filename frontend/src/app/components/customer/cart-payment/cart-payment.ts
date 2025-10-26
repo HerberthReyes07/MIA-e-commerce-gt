@@ -15,9 +15,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { CartDetailsDto, CartService } from '../../../services/cart-service';
 import { CreditCardService, CreditCardDto } from '../../../services/credit-card-service';
-import { environment } from '../../../../environments/environment';
 import { OrderService } from '../../../services/order-service';
 import { SnackbarService } from '../../../services/snackbar-service';
+import { ImageService } from '../../../services/image-service';
 
 @Component({
   selector: 'app-cart-payment',
@@ -63,6 +63,7 @@ export class CartPayment implements OnInit {
     private cardService: CreditCardService,
     private orderService: OrderService,
     private snackbarService: SnackbarService,
+    private imageService: ImageService
   ) {
     // Form para selección de método de pago
     this.cardSelectionForm = this.fb.group({
@@ -118,7 +119,7 @@ export class CartPayment implements OnInit {
   }
 
   getImageUrl(imagePath: string): string {
-    return imagePath ? `${environment.apiBaseUrl}${imagePath}` : '';
+    return this.imageService.getImageUrl(imagePath);
   }
 
   getItemTotal(item: CartDetailsDto): number {

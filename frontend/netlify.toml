@@ -10,5 +10,5 @@
   publish = "dist/frontend/browser"
 
 [functions]
-  # IMPORTANTE: El directorio debe ser relativo a la raíz del REPOSITORIO, no al base
-  directory = "frontend/netlify/functions"
+  # CRÍTICO: Debe ser relativo a la RAÍZ del repositorio, no al base
+  directory = "netlify/functions"

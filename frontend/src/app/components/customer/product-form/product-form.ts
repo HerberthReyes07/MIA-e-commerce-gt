@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 import { MatChipsModule } from '@angular/material/chips';
 import { CategoryDto, CategoryService } from '../../../services/category-service';
 import { ProductService, ProductDto, CreateProductPayload } from '../../../services/product-service';
-import { environment } from '../../../../environments/environment';
+import { ImageService } from '../../../services/image-service';
 
 export interface ProductData {
   id?: number;
@@ -56,7 +56,8 @@ export class ProductForm implements OnInit {
     public dialogRef: MatDialogRef<ProductForm>,
     @Inject(MAT_DIALOG_DATA) public data: ProductDto | null,
     private categoryService: CategoryService,
-    private productService: ProductService
+    private productService: ProductService,
+    private imageService: ImageService
   ) { }
 
   ngOnInit(): void {
@@ -79,7 +80,7 @@ export class ProductForm implements OnInit {
     });
 
     if (this.data?.imageUrl) {
-      this.imagePreview = `${environment.apiBaseUrl}${this.data.imageUrl}`;
+      this.imagePreview = this.imageService.getImageUrl(this.data.imageUrl);
     }
   }
 

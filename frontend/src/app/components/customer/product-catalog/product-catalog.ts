@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { ProductCatalogDto, ProductService } from '../../../services/product-service';
 import { CartService } from '../../../services/cart-service';
 import { AxiosService } from '../../../services/axios-service';
@@ -16,16 +19,21 @@ import { ImageService } from '../../../services/image-service';
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
     MatCardModule,
     MatButtonModule,
     MatIconModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   templateUrl: './product-catalog.html',
   styleUrl: './product-catalog.css'
 })
 export class ProductCatalog implements OnInit {
   items: ProductCatalogDto[] = [];
+  filteredItems: ProductCatalogDto[] = [];
+  searchTerm = '';
   isLoading = false;
   isEmpty = false;
 
@@ -43,13 +51,26 @@ export class ProductCatalog implements OnInit {
     try {
       const data = await this.productService.getProductCatalog();
       this.items = data || [];
+      this.filteredItems = [...this.items];
       this.isEmpty = this.items.length === 0;
     } catch (err) {
       console.error('Error al cargar catálogo de productos:', err);
       this.items = [];
+      this.filteredItems = [];
       this.isEmpty = true;
     } finally {
       this.isLoading = false;
+    }
+  }
+
+  filterProducts(): void {
+    const term = this.searchTerm.toLowerCase().trim();
+    if (!term) {
+      this.filteredItems = [...this.items];
+    } else {
+      this.filteredItems = this.items.filter(item =>
+        item.name.toLowerCase().includes(term)
+      );
     }
   }
 

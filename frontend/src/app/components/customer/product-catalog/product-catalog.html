@@ -3,15 +3,34 @@
 		<mat-icon>shopping_bag</mat-icon>
 		Catálogo de Productos
 	</h1>
+	<div class="search-container">
+		<mat-form-field appearance="outline" class="search-field">
+			<mat-label>Buscar productos</mat-label>
+			<input 
+				matInput 
+				[(ngModel)]="searchTerm" 
+				(ngModelChange)="filterProducts()"
+				placeholder="Escribe el nombre del producto..."
+			>
+			<mat-icon matPrefix>search</mat-icon>
+			@if (searchTerm) {
+				<button mat-icon-button matSuffix (click)="searchTerm = ''; filterProducts()">
+					<mat-icon>clear</mat-icon>
+				</button>
+			}
+		</mat-form-field>
+	</div>
 </div>
 
 @if (isLoading) {
 	<div class="state-text">Cargando catálogo…</div>
 } @else if (isEmpty) {
 	<div class="state-text">No hay productos disponibles por ahora.</div>
+} @else if (filteredItems.length === 0) {
+	<div class="state-text">No se encontraron productos con "{{ searchTerm }}"</div>
 } @else {
 	<div class="cards-grid">
-		@for (p of items; track p.id) {
+		@for (p of filteredItems; track p.id) {
 			<mat-card class="product-card mat-elevation-z2">
 				<div class="image-wrapper">
 					<img [src]="getImageUrl(p.imageUrl)" [alt]="p.name" />
